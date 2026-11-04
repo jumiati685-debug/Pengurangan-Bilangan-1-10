@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petualangan Bola: Belajar Pengurangan 1–10</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e3f2ff;--card:#fff;--ink:#12365e;--blue:#1e88e5;--blue2:#0d5cb0;--yel:#ffd43b;--yel2:#f5b700;--ok:#2e9e5b;--bad:#e8590c;--okbg:#e6f9ee;--badbg:#fff1e6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b2545;--card:#13335f;--ink:#f1f6ff;--blue:#4aa3ff;--blue2:#2a7fd6;--okbg:#14492f;--badbg:#5a2f12}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Baloo 2","Comic Sans MS","Trebuchet MS",sans-serif;font-size:20px;line-height:1.35;min-height:100vh;overflow-x:hidden}
+.top{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 8px 4px}
+.dot{width:14px;height:14px;border-radius:50%;background:#9cc9f5;transition:.3s}
+.dot.on{background:var(--yel2);transform:scale(1.5)}
+.dot.done{background:var(--blue)}
+main{max-width:760px;margin:0 auto;padding:8px 14px 110px}
+.slide{display:none;background:var(--card);border:5px solid var(--blue);border-radius:28px;padding:22px 18px;box-shadow:0 8px 0 var(--blue2);animation:pop .5s ease}
+.slide.on{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+h1,h2{margin:.2em 0;color:var(--blue2);line-height:1.1}
+@media (prefers-color-scheme:dark){h1,h2{color:var(--yel)}}
+h1{font-size:2.1rem;font-weight:800}h2{font-size:1.6rem;font-weight:800}
+.center{text-align:center}
+.hero{font-size:4.5rem;display:inline-block;animation:bounce 1s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px) rotate(25deg)}}
+.badge{display:inline-block;background:var(--yel);color:#4a3600;border-radius:999px;padding:4px 16px;font-weight:700;margin:4px}
+.ident{background:var(--bg);border-radius:18px;padding:10px 14px;margin:12px auto;max-width:420px;text-align:left}
+.goal{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:18px;padding:10px 14px;margin:10px 0}
+.goal b.i{font-size:2rem;animation:bounce 1.6s infinite}
+.btn{font-family:inherit;font-size:1.1rem;font-weight:800;border:0;border-radius:999px;padding:10px 22px;cursor:pointer;background:var(--yel);color:#4a3600;box-shadow:0 5px 0 var(--yel2);transition:transform .1s;margin:4px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--yel2)}
+.btn.blue{background:var(--blue);color:#fff;box-shadow:0 5px 0 var(--blue2)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:12px 0;min-height:64px}
+.it{font-size:2.3rem;position:relative;transition:.5s;user-select:none;line-height:1.1}
+.it.gone{opacity:.3;transform:scale(.7) rotate(-20deg);filter:grayscale(1)}
+.it.gone::after{content:"✖";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:1.6rem;color:var(--bad)}
+.it.tap{cursor:pointer;animation:wob 1.6s infinite}
+@keyframes wob{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.eq{font-size:2.2rem;font-weight:800;text-align:center;color:var(--blue2);min-height:50px}
+@media (prefers-color-scheme:dark){.eq{color:var(--yel)}}
+.story{background:var(--bg);border-radius:18px;padding:10px 14px;margin:8px 0}
+.tabs{display:flex;justify-content:center;flex-wrap:wrap}
+.opts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.opt{font-family:inherit;font-size:2rem;font-weight:800;width:92px;height:76px;border-radius:22px;border:4px solid var(--blue);background:var(--card);color:var(--ink);cursor:pointer;transition:.2s}
+.opt:hover:not([disabled]){background:var(--yel);color:#4a3600;transform:scale(1.07)}
+.opt.right{background:var(--ok);border-color:var(--ok);color:#fff;animation:jump .6s}
+.opt.wrong{background:var(--bad);border-color:var(--bad);color:#fff;animation:shake .4s}
+@keyframes jump{50%{transform:translateY(-14px) scale(1.12)}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.fb{border-radius:18px;padding:12px 16px;margin:10px 0;animation:pop .4s;font-weight:500}
+.fb.ok{background:var(--okbg);border:3px solid var(--ok)}
+.fb.no{background:var(--badbg);border:3px solid var(--bad)}
+.bar{height:16px;border-radius:99px;background:#b9dcff;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;width:0;background:var(--yel2);transition:width .5s}
+.stars{font-size:2.6rem;letter-spacing:4px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:8px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--bg) 40%)}
+.say{min-height:2.6em;text-align:center;font-weight:700}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="top" id="dots"></div>
+<main>
+
+<!-- 1 Pembuka -->
+<section class="slide on center">
+  <div class="hero">⚽</div>
+  <h1>Petualangan Bola:<br>Belajar Mengurangi!</h1>
+  <p>Halo, teman hebat! Ayo bermain bola sambil belajar berhitung! 🏀</p>
+  <div class="ident">
+    <div>📘 <b>Mata Pelajaran:</b> Matematika</div>
+    <div>🎒 <b>Kelas:</b> 1 SD</div>
+    <div>➖ <b>Materi:</b> Pengurangan bilangan 1–10</div>
+  </div>
+  <span class="badge">Biru ⚽ Kuning</span>
+</section>
+
+<!-- 2 Tujuan -->
+<section class="slide">
+  <h2>🎯 Apa yang akan kita pelajari?</h2>
+  <div class="goal"><b class="i">⚽</b><div>Aku tahu <b>pengurangan</b> itu ada di sekitarku setiap hari.</div></div>
+  <div class="goal"><b class="i">🍎</b><div>Aku bisa melihat cerita saat benda <b>diambil, hilang, atau pergi</b>.</div></div>
+  <div class="goal"><b class="i">🏀</b><div>Aku bisa menghitung <b>sisa benda</b> dari 1 sampai 10.</div></div>
+  <p class="center"><b>Siap? Ayo kita mulai! 🚀</b></p>
+</section>
+
+<!-- 3 Materi -->
+<section class="slide">
+  <h2>💡 Apa itu Pengurangan?</h2>
+  <p>Mengurangi artinya <b>mengambil sebagian</b> benda, jadi bendanya <b>tinggal sedikit</b>. Tandanya <b>−</b> (kurang). Pilih cerita, lalu tekan tombol!</p>
+  <div class="tabs" id="mtabs"></div>
+  <div class="story" id="mstory"></div>
+  <div class="items" id="mitems"></div>
+  <div class="eq" id="meq"></div>
+  <div class="center"><button class="btn blue" id="mgo">Ambil! 👋</button><button class="btn" id="mreset">Ulang 🔄</button></div>
+</section>
+
+<!-- 4 Aktivitas -->
+<section class="slide">
+  <h2>🎮 Ayo Bermain!</h2>
+  <div class="story" id="astory"></div>
+  <div class="items" id="aitems"></div>
+  <div class="eq" id="aeq"></div>
+  <div class="say" id="asay"></div>
+  <div class="center"><button class="btn" id="areset">Ulang 🔄</button><button class="btn blue" id="anext" disabled>Permainan berikutnya ➡️</button></div>
+</section>
+
+<!-- 5 Kuis -->
+<section class="slide">
+  <h2>📝 Kuis Bola Ajaib</h2>
+  <div>Soal <b id="qn">1</b> dari 10 · Skor: <b id="qs">0</b> ⭐</div>
+  <div class="bar"><i id="qbar"></i></div>
+  <div class="story" id="qstory"></div>
+  <div class="items" id="qitems"></div>
+  <div class="opts" id="qopts"></div>
+  <div id="qfb"></div>
+  <div class="center"><button class="btn blue" id="qnext" style="display:none">Lanjut ➡️</button></div>
+</section>
+
+<!-- 6 Umpan balik & refleksi -->
+<section class="slide center">
+  <div class="hero" id="rball">🏆</div>
+  <h2>Hasil dan Refleksi</h2>
+  <div class="stars" id="rstars"></div>
+  <p id="rtext"></p>
+  <p><b>Pengurangan ada di mana saja!</b><br>
+  <span class="badge">⚽ bola ditendang</span><span class="badge">🍬 permen dimakan</span><span class="badge">🎈 balon terbang</span></p>
+  <div class="story"><b>Refleksi:</b> Bagaimana perasaanmu belajar hari ini?</div>
+  <div class="opts">
+    <button class="opt" data-r="1" title="Paham">😄</button>
+    <button class="opt" data-r="2" title="Lumayan">🙂</button>
+    <button class="opt" data-r="3" title="Perlu belajar lagi">🤔</button>
+  </div>
+  <div class="say" id="rsay"></div>
+  <button class="btn" id="restart">Main lagi dari awal 🔄</button>
+</section>
+
+</main>
+<div class="nav">
+  <button class="btn" id="prev">⬅️ Kembali</button>
+  <button class="btn blue" id="next">Lanjut ➡️</button>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let cur=0,visited=new Set([0]);
+const slides=[...document.querySelectorAll('.slide')];
+const dots=$('dots');
+slides.forEach(()=>{const d=document.createElement('span');d.className='dot';dots.appendChild(d)});
+function go(n){
+  cur=Math.max(0,Math.min(slides.length-1,n));visited.add(cur);
+  slides.forEach((s,i)=>s.classList.toggle('on',i===cur));
+  [...dots.children].forEach((d,i)=>{d.className='dot'+(i===cur?' on':visited.has(i)?' done':'')});
+  $('prev').style.visibility=cur===0?'hidden':'visible';
+  $('next').style.visibility=cur===slides.length-1?'hidden':'visible';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+$('prev').onclick=()=>go(cur-1);$('next').onclick=()=>go(cur+1);
+
+function row(item,n,gone){let h='';for(let i=0;i<n;i++)h+=`<span class="it${i>=n-gone?' gone':''}">${item}</span>`;return h}
+
+/* Materi */
+const ex=[
+ {i:'⚽',n:5,k:2,t:'Di lapangan ada 5 bola. Lalu 2 bola ditendang jauh. Sisa berapa bola?'},
+ {i:'🍬',n:7,k:3,t:'Adi punya 7 permen. Adi makan 3 permen. Sisa berapa permen?'},
+ {i:'🎈',n:6,k:4,t:'Ada 6 balon di pesta. 4 balon terbang ke langit. Sisa berapa balon?'}];
+let me=0,mk=0;
+function mrender(){
+  const e=ex[me];
+  $('mstory').textContent=e.t;
+  $('mitems').innerHTML=row(e.i,e.n,mk);
+  $('meq').textContent=mk===e.k?`${e.n} − ${e.k} = ${e.n-e.k} 🎉`:`${e.n} − ${mk} = ?`;
+  $('mgo').disabled=mk>=e.k;
+  $('mgo').textContent=mk===0?'Ambil! 👋':mk<e.k?'Ambil lagi! 👋':'Selesai!';
+}
+ex.forEach((e,i)=>{const b=document.createElement('button');b.className='btn'+(i?'':' blue');b.textContent=e.i+' Cerita '+(i+1);
+  b.onclick=()=>{me=i;mk=0;[...$('mtabs').children].forEach((x,j)=>x.className='btn'+(j===i?' blue':''));mrender()};$('mtabs').appendChild(b)});
+$('mgo').onclick=()=>{mk++;mrender()};$('mreset').onclick=()=>{mk=0;mrender()};mrender();
+
+/* Aktivitas */
+const act=[{i:'⚽',n:8,k:3},{i:'🏀',n:6,k:2},{i:'🍎',n:9,k:4}];
+let ai=0,at=0;
+function arender(){
+  const a=act[ai];at=0;
+  $('astory').innerHTML=`Ada <b>${a.n}</b> ${a.i}. Ketuk <b>${a.k}</b> untuk diambil! 👆`;
+  $('aitems').innerHTML='';
+  for(let i=0;i<a.n;i++){const s=document.createElement('span');s.className='it tap';s.textContent=a.i;
+    s.onclick=()=>{if(s.classList.contains('gone')||at>=a.k)return;s.classList.add('gone');s.classList.remove('tap');at++;aupd()};
+    $('aitems').appendChild(s)}
+  $('aeq').textContent=`${a.n} − 0 = ${a.n}`;$('asay').textContent='';$('anext').disabled=true;
+  $('anext').textContent=ai<act.length-1?'Permainan berikutnya ➡️':'Ke kuis! 🚀';
+}
+function aupd(){
+  const a=act[ai];$('aeq').textContent=`${a.n} − ${at} = ${a.n-at}`;
+  if(at===a.k){$('asay').textContent=`Hebat sekali! Sisa ${a.n-a.k} ${a.i}. Kamu pintar mengurangi! 🌟`;$('anext').disabled=false}
+}
+$('areset').onclick=arender;
+$('anext').onclick=()=>{if(ai<act.length-1){ai++;arender()}else go(cur+1)};
+arender();
+
+/* Kuis */
+const Q=[
+ [6,2,'⚽','bola','Rani punya 6 bola. 2 bola dipinjam temannya.'],
+ [5,1,'🍎','apel','Ibu membeli 5 apel. Adik memakan 1 apel.'],
+ [9,4,'🍬','permen','Ada 9 permen di toples. Doni mengambil 4 permen.'],
+ [8,3,'🎈','balon','Ada 8 balon. 3 balon terbang tertiup angin.'],
+ [10,5,'⚽','bola','Di lapangan ada 10 bola. 5 bola dimasukkan ke keranjang.'],
+ [7,2,'✏️','pensil','Dina membawa 7 pensil. 2 pensil diberikan ke teman.'],
+ [4,4,'🧁','kue','Ada 4 kue. Semua kue dimakan anak-anak.'],
+ [10,7,'🐟','ikan','Ada 10 ikan di kolam. 7 ikan berenang pergi.'],
+ [6,5,'🌼','bunga','Ada 6 bunga di taman. 5 bunga dipetik.'],
+ [9,6,'🏀','bola basket','Ada 9 bola basket. 6 bola dibawa pulang.']];
+const praise=['Hebat sekali! 🌟','Kamu pintar! 👏','Yeay, benar! Luar biasa! 🎉','Mantap! Kamu juara! 🏆','Keren banget! ⭐'];
+let qi=0,score=0;
+const shuffle=a=>a.sort(()=>Math.random()-.5);
+function qrender(){
+  const [a,b,ic,nm,st]=Q[qi],r=a-b;
+  $('qn').textContent=qi+1;$('qs').textContent=score;$('qbar').style.width=(qi/10*100)+'%';
+  $('qstory').innerHTML=`${st} <b>Sisa berapa ${nm}?</b>`;
+  $('qitems').innerHTML=row(ic,a,0);$('qfb').innerHTML='';$('qnext').style.display='none';
+  const d=shuffle([r+1,r-1,r+2,r-2,a].filter((v,i,s)=>v>=0&&v<=10&&v!==r&&s.indexOf(v)===i)).slice(0,2);
+  $('qopts').innerHTML='';
+  shuffle([r,...d]).forEach(v=>{const o=document.createElement('button');o.className='opt';o.textContent=v;o.onclick=()=>qans(o,v);$('qopts').appendChild(o)});
+}
+function qans(el,v){
+  const [a,b,ic,nm]=Q[qi],r=a-b;
+  [...$('qopts').children].forEach(o=>{o.disabled=true;if(+o.textContent===r)o.classList.add('right')});
+  if(v===r){score++;$('qs').textContent=score;
+    $('qfb').innerHTML=`<div class="fb ok"><b>${praise[qi%praise.length]}</b> Jawabanmu benar: ${a} − ${b} = ${r}. ${ic}</div>`;
+  }else{el.classList.add('wrong');
+    $('qitems').innerHTML=row(ic,a,b);
+    $('qfb').innerHTML=`<div class="fb no"><b>Belum tepat, tidak apa-apa! 💛</b><br>Awalnya ada ${a} ${nm}. Sebanyak ${b} ${nm} diambil, jadi dicoret ✖. Yang tersisa ada ${r}. Jadi ${a} − ${b} = <b>${r}</b>.</div>`;}
+  $('qnext').style.display='inline-block';
+  $('qnext').textContent=qi<9?'Lanjut ➡️':'Lihat hasil 🏆';
+}
+$('qnext').onclick=()=>{if(qi<9){qi++;qrender()}else{$('qbar').style.width='100%';finish();go(5)}};
+qrender();
+
+/* Hasil */
+function finish(){
+  const st=score>=9?3:score>=6?2:1;
+  $('rstars').textContent='⭐'.repeat(st)+'☆'.repeat(3-st);
+  $('rtext').innerHTML=`Skormu: <b>${score} dari 10</b>. `+(score>=9?'Luar biasa! Kamu jago mengurangi! 🎉':score>=6?'Bagus sekali! Sedikit lagi kamu jadi juara! 💪':'Terima kasih sudah berusaha! Ayo coba lagi, pasti bisa! 💛');
+  $('rsay').textContent='';
+}
+document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{
+  $('rsay').textContent={1:'Senangnya! Kamu hebat! Ceritakan ke ibu dan bapak ya! 😄',2:'Bagus! Besok kita latihan lagi ya! 🙂',3:'Tidak apa-apa. Ayo main lagi dan lihat bola-bolanya pelan-pelan! 🤗'}[b.dataset.r]});
+$('restart').onclick=()=>{qi=0;score=0;ai=0;me=0;mk=0;mrender();arender();qrender();visited=new Set([0]);go(0)};
+go(0);
+</script>
+</body>
+</html>
